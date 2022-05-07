@@ -1,0 +1,70 @@
+﻿@model IEnumerable<LabaOne.Virus>
+
+@{
+    ViewData["Title"] = "Додати вірус";
+}
+
+<h1>Додати вірус</h1>
+
+<p>
+    <a asp-action="Create">Додати вірус</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VirusName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VirusDateDiscovered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group.GroupName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VirusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VirusDateDiscovered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.GroupName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="container"> 
+    <div id="chart1"></div> 
+</div> 
+@section scripts{ 
+    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+<script> 
+    google.charts.load('current', { 'packages': ['corechart'] }); 
+    google.charts.setOnLoadCallback(drawChart); 
+        function drawChart() { 
+            $.get('/api/Chart/JsonDataVirusVariants', function(JsonData) { 
+                data = google.visualization.arrayToDataTable(JsonData, false); 
+                var option = { 
+                    title: "Співвідношення кількості вірусів та штамів", 
+                    width: 500, 
+                    height: 400 
+                }; 
+                chart = new google.visualization.PieChart(document.getElementById('chart1')); 
+                chart.draw(data, option); 
+            }) 
+        } 
+    </script> 
+} 

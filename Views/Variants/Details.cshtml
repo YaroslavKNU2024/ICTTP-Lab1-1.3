@@ -1,0 +1,63 @@
+﻿@using System.Web
+@using Microsoft.AspNetCore.Html
+@model LabaOne.Variant
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Деталі про штам вірусу</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VariantName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VariantName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VariantOrigin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VariantOrigin)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VariantDateDiscovered)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VariantDateDiscovered)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Virus.VirusName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Virus.VirusName)
+        </dd>
+        </dl>
+        <h6>Інфіковані країни</h6>
+        <dl class="countries">
+        @foreach(var c in Model.Countries)
+        {
+            <dd class = "col-sm-10">
+            @Html.DisplayFor(model => c.CountryName)</dd>
+        }
+        </dl>
+         @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Symptoms)
+        </dt>*@
+        <h6>Симптоми</h6>
+        <dl class="symptoms">
+        @foreach(var s in Model.Symptoms)
+        {
+            <dd class = "col-sm-10">
+            @Html.DisplayFor(model => s.SymptomName)</dd>
+        }
+        </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
+    <a asp-action="Index">Назад до списку</a>
+</div>

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<LabaOne.Variant>
+
+@{
+    ViewData["Title"] = "Штами";
+}
+
+<h1>Штами</h1>
+
+<p>
+    <a asp-action="Create">Додати Штам</a>
+</p>
+
+
+
+@if (@ViewBag.VirusName == null)
+{
+    <h1>Усі штами</h1>
+}
+else
+{
+    <h1>штами за вірусом @ViewBag.VirusName</h1>
+}
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VariantName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VariantOrigin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VariantDateDiscovered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Virus.VirusName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VariantName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VariantOrigin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VariantDateDiscovered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Virus.VirusName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+

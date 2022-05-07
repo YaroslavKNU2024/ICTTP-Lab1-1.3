@@ -1,0 +1,51 @@
+﻿@model LabaOne.Virus
+
+@{
+    ViewData["Title"] = "Додати вірус";
+}
+
+<h1>Додати вірус</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if(@ViewBag.GroupId != null)
+            {
+                @if (@ViewBag.GroupId.GetType().BaseType == typeof(Microsoft.AspNetCore.Mvc.Rendering.MultiSelectList))
+            {
+                <div class="form-group">
+                    <label asp-for="GroupId" class="control-label">Група вірусів</label>
+                    <select asp-for="GroupId" class ="form-control" asp-items="ViewBag.GroupId"></select>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" value="@ViewBag.GroupId" name="GroupId" />            
+            }
+            }
+            <div class="form-group">
+                <label asp-for="VirusName" class="control-label"></label>
+                <input asp-for="VirusName" class="form-control" />
+                <span asp-validation-for="VirusName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VirusDateDiscovered" class="control-label"></label>
+                <input asp-for="VirusDateDiscovered" class="form-control" />
+                <span asp-validation-for="VirusDateDiscovered" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Повернутися до списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

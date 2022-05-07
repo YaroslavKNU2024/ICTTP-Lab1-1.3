@@ -1,0 +1,87 @@
+﻿@model VariantsEdit
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Редагувати</h1>
+
+<h4>Штам вірусу</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="VariantName" class="control-label"></label>
+                <input asp-for="VariantName" class="form-control" />
+                <span asp-validation-for="VariantName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VariantOrigin" class="control-label"></label>
+                <input asp-for="VariantOrigin" class="form-control" />
+                <span asp-validation-for="VariantOrigin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VariantDateDiscovered" class="control-label"></label>
+                <input asp-for="VariantDateDiscovered" class="form-control" />
+                <span asp-validation-for="VariantDateDiscovered" class="text-danger"></span>
+            </div>
+            @if (@ViewBag.VirusId != null)
+            {
+                @if (@ViewBag.VirusId.GetType().BaseType == typeof(Microsoft.AspNetCore.Mvc.Rendering.MultiSelectList))
+                {
+                    <div class="form-group">
+                        <label asp-for="VirusId" class="control-label"></label>
+                        <select asp-for="VirusId" class="form-control" asp-items="ViewBag.VirusId"></select>
+                        <span asp-validation-for="VirusId" class="text-danger"></span>
+                    </div>
+                }
+            }
+        @*<div class="form-group">
+        @Html.LabelFor(x => Model.CountriesIds., htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.DropDownListFor(x => Model.CountriesIds, new SelectList(Model.CountriesIds, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Country"})
+            @Html.ValidationMessageFor(x => x.CountriesIds, "", new { @class = "text-danger" })
+        </div>
+        </div>*@
+
+            <div class="form-group">
+                <br/>
+                <label class="control-label">Список країн: </label>
+                <br/>
+                    <select asp-for="CountriesIds" multiple="multiple" class="form-group search-select" asp-items="ViewBag.Countries"></select>
+            </div>
+            <div class="form-group">
+                <br/>
+                <label class="control-label">Список симптомів: </label>
+                <br/>
+                    <select asp-for="SymptomsIds" multiple="multiple" class="form-group search-select" asp-items="ViewBag.Symptoms"></select>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад до списку</a>
+</div>
+
+@section Scripts {
+    <script>
+//        if (otherSelect.value == opt.value) { 
+//            $(opt).prop("disabled", "disabled");
+//}
+//        $(document).ready(function() {
+//            $('#Subjects_dropdown').multiselect();
+//        });
+//        if (otherSelect.value == opt.value) { 
+//            $(opt).prop("disabled", "disabled");
+//}
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
